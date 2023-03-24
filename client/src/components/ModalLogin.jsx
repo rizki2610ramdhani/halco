@@ -25,17 +25,11 @@ function ModalLogin() {
         })
     }
 
-    const handleSubmit = useMutation( async (e) => {
+    const handleSubmit = useMutation(async (e) => {
         try {
             e.preventDefault()
 
-            let config = {
-                header: {
-                  "Content-Type": "application/json",
-                },
-              };
-
-            const response = await API.post('/login', form, config)
+            const response = await API.post('/login', form)
 
             console.log(response)
             Swal.fire({
@@ -51,11 +45,16 @@ function ModalLogin() {
                 payload: response.data.Data,
             });
 
+            setForm({
+                username: '',
+                password: ''
+            })
+
             setAuthToken(localStorage.Token);
             navigate("/")
 
             handleClose()
-        }catch (e){
+        } catch (e) {
             Swal.fire({
                 title: 'Error!',
                 text: 'Registrasi gagal',
@@ -64,7 +63,7 @@ function ModalLogin() {
             })
             // console.log("login failed: " + e)
         }
-        
+
     })
 
     const [show, setShow] = useState(false);
@@ -83,11 +82,11 @@ function ModalLogin() {
                     <Form onSubmit={(e) => handleSubmit.mutate(e)}>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
                             <Form.Label className='nav-text-bold'>Username</Form.Label>
-                            <Form.Control name="username" type="text" value={username} onChange={handleChange} required/>
+                            <Form.Control name="username" type="text" value={username} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label className='nav-text-bold'>Password</Form.Label>
-                            <Form.Control name="password" type="password" value={password} onChange={handleChange} required/>
+                            <Form.Control name="password" type="password" value={password} onChange={handleChange} required />
                         </Form.Group>
                         <Button variant="primary" type="submit" className='all-btn-submit'>
                             Sign in
