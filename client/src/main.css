@@ -1,0 +1,90 @@
+.all-btn-submit {
+    background-color: #FF6185 !important;
+    border: none !important;
+    width: 100% !important;
+    font-weight: 600 !important;
+}
+
+.nav-logo {
+    width: 150px;
+}
+
+.text-color-pink{
+    color: #FF6185;
+}
+
+.bg-color-pink{
+    background-color: #FF6185;
+}
+
+.bg-input-form{
+    background-color: #d3d3d3 !important;
+    border: 2px solid #919191 !important;
+}
+
+.nav-style {
+    box-shadow: 0 0 30px #bdbdbd;
+    margin-bottom: 40px;
+}
+
+.nav-text-register {
+    border: 2px solid #FF6185;
+    color: #FF6185;
+    padding: 3px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.nav-text-login {
+    border: 2px solid #FF6185;
+    padding: 3px 29px;
+    border-radius: 4px;
+    background-color: #FF6185;
+    color: white;
+    font-weight: 600;
+}
+
+.nav-text-bold {
+    font-weight: 600;
+}
+
+.text-bold {
+    font-weight: 600;
+}
+
+.img-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.img-overlay {
+    position: absolute;
+    top: 230px;
+    bottom: 0;
+    left: 150px;
+    right: 550px;
+    text-align: center;
+}
+
+.text-gray{
+    color: gray;
+}
+
+.img-overlay:before {
+    content: ' ';
+    display: block;
+    height: 33%;
+}
+.nav-profile-image{
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.nav-dropdown-img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
