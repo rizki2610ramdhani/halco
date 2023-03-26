@@ -12,6 +12,7 @@ type ArticleRepository interface {
 	FindArticles() ([]models.Article, error)
 	UpdateArticle(article models.Article) (models.Article, error)
 	DeleteArticle(article models.Article) (models.Article, error)
+	FindMyArticles(ID int) ([]models.Article, error)
 }
 
 func RepositoryArticle(db *gorm.DB) *repository {
@@ -43,4 +44,10 @@ func (repo *repository) UpdateArticle(article models.Article) (models.Article, e
 func (repo *repository) DeleteArticle(article models.Article) (models.Article, error) {
 	err := repo.db.Delete(&article).Error
 	return article, err
+}
+
+func (repo *repository) FindMyArticles(ID int) ([]models.Article, error) {
+	var articles []models.Article
+	err := repo.db.Preload("User").Where("user_id =?", ID).Find(&articles).Error
+	return articles, err
 }

@@ -8,7 +8,7 @@ export default function ModalGiveResponse() {
         <>
             <Link className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
                 <button onClick={() => setShow(true)} className="text-bold" style={{ border: "none", color: "white", borderRadius: "10px", padding: "4px", backgroundColor: "#0ACF83" }}>
-                    Give Response
+                    Edit Article
                 </button>
             </Link>
             <Modal

@@ -54,9 +54,10 @@ export default function Header() {
                                     </span>
                                     <ul className="dropdown-menu">
                                         <li><Link to='/profile' className="dropdown-item"><img alt='icon' src={process.env.PUBLIC_URL + "images/nav/user.png"} className="nav-dropdown-img" /> Profile</Link></li>
-                                        {state.user.Role === "dokter" ?
+                                        {state.user.Role === "Doctor" ?
                                             <>
                                                 <li><Link to="/add-article" className="dropdown-item"><img alt='icon' src={process.env.PUBLIC_URL + "images/nav/article.png"} className="nav-dropdown-img" /> Add Article</Link></li>
+                                                <li><Link to="/my-articles" className="dropdown-item"><img alt='icon' src={process.env.PUBLIC_URL + "images/nav/article.png"} className="nav-dropdown-img" /> My Article</Link></li>
                                                 <li><Link to="/reservasi-data" className="dropdown-item"><img alt='icon' src={process.env.PUBLIC_URL + "images/nav/article.png"} className="nav-dropdown-img" /> Reservasi Data</Link></li>
                                             </>
                                             :

@@ -13,17 +13,17 @@ export function PrivateRouteLogin() {
 export function PrivateRoutePatient() {
     const [state] = useContext(UserContext);
 
-    if (state.user.role === "") {
-        return <Navigate to="/" />
+    if (state.user.Role === "Patient") {
+        return <Outlet />
     }
-    return <Outlet />
+    return <Navigate to="/" />
 }
 
 export function PrivateRouteDokter() {
     const [state] = useContext(UserContext);
 
-    if (state.user.role === "dokter") {
-        return <Navigate to="/" />
+    if (state.user.Role === "Doctor") {
+        return <Outlet />
     }
-    return <Outlet />
+    return <Navigate to="/" />
 }

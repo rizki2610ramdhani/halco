@@ -12,12 +12,13 @@ function ModalRegister() {
         username: '',
         email: '',
         password: '',
+        role: '',
         gender: '',
         phone: '',
         address: '',
     })
 
-    const { fullName, username, email, password, gender, phone, address } = form
+    const { fullName, username, email, password, role, gender, phone, address } = form
 
     const genderList = [
         {
@@ -31,6 +32,21 @@ function ModalRegister() {
         {
             value: "Female",
             text: "Female",
+        },
+    ];
+
+    const roleList = [
+        {
+            value: "",
+            text: "-- Choose your gender --",
+        },
+        {
+            value: "Patient",
+            text: "Patient",
+        },
+        {
+            value: "Doctor",
+            text: "Doctor",
         },
     ];
 
@@ -61,6 +77,7 @@ function ModalRegister() {
                 username: '',
                 email: '',
                 password: '',
+                role: '',
                 gender: '',
                 phone: '',
                 address: '',
@@ -108,6 +125,16 @@ function ModalRegister() {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label className='nav-text-bold'>Password</Form.Label>
                             <Form.Control name="password" type="password" min={6} value={password} onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId='formBasicRole'>
+                            <Form.Label className='nav-text-bold'>List As</Form.Label>
+                            <Form.Select name="role" value={role} onChange={handleChange}>
+                                {roleList.map((item) => (
+                                    <option key={item.value} value={item.value}>
+                                        {item.text}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId='formBasicGender'>
                             <Form.Label className='nav-text-bold'>Gender</Form.Label>

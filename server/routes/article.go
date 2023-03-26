@@ -14,8 +14,9 @@ func ArticleRoutes(e *echo.Group) {
 	h := handlers.HandlerArticle(articleRepository)
 
 	e.POST("/article", middleware.Auth(middleware.UploadFile(h.CreateArticle)))
-	e.GET("/article/:id", middleware.Auth(h.GetArticle))
-	e.GET("/articles", middleware.Auth(h.FindArticles))
-	e.PUT("/article/:id", middleware.Auth(middleware.UploadFile(h.UpdateArticle)))
+	e.GET("/article/:id", h.GetArticle)
+	e.GET("/articles", h.FindArticles)
+	e.PATCH("/article/:id", middleware.Auth(middleware.UploadFile(h.UpdateArticle)))
 	e.DELETE("/article/:id", middleware.Auth(h.DeleteArticle))
+	e.GET("/articles/:id", h.FindMyArticles)
 }

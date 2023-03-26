@@ -25,44 +25,37 @@ func HandlerArticle(ArticleRepository repositories.ArticleRepository) *handlerAr
 
 func (h *handlerArticle) CreateArticle(c echo.Context) error {
 	userLogin := c.Get("userLogin")
-	userRole := userLogin.(jwt.MapClaims)["role"].(string)
-	if userRole == "dokter" {
-		userId := userLogin.(jwt.MapClaims)["id"].(float64)
-		dataFile := c.Get("dataFile").(string)
+	userId := userLogin.(jwt.MapClaims)["id"].(float64)
+	dataFile := c.Get("dataFile").(string)
 
-		request := articledto.ArticleRequest{
-			UserId:      int(userId),
-			Title:       c.FormValue("title"),
-			Attache:     dataFile,
-			Description: c.FormValue("description"),
-		}
-
-		validation := validator.New()
-		err := validation.Struct(request)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
-		}
-
-		article := models.Article{
-			UserId:      request.UserId,
-			Title:       request.Title,
-			Attache:     path_file + request.Attache,
-			Description: request.Description,
-		}
-
-		article, err = h.ArticleRepository.CreateArticle(article)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
-		}
-
-		article, _ = h.ArticleRepository.GetArticle(article.ID)
-
-		return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: article})
-
+	request := articledto.ArticleRequest{
+		UserId:      int(userId),
+		Title:       c.FormValue("title"),
+		Attache:     dataFile,
+		Description: c.FormValue("description"),
 	}
 
-	return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: "Access denied"})
+	validation := validator.New()
+	err := validation.Struct(request)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
+	}
 
+	article := models.Article{
+		UserId:      request.UserId,
+		Title:       request.Title,
+		Attache:     path_file + request.Attache,
+		Description: request.Description,
+	}
+
+	article, err = h.ArticleRepository.CreateArticle(article)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
+	}
+
+	article, _ = h.ArticleRepository.GetArticle(article.ID)
+
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: article})
 }
 
 func (h *handlerArticle) GetArticle(c echo.Context) error {
@@ -92,7 +85,7 @@ func (h *handlerArticle) FindArticles(c echo.Context) error {
 func (h *handlerArticle) UpdateArticle(c echo.Context) error {
 	userLogin := c.Get("userLogin")
 	userRole := userLogin.(jwt.MapClaims)["role"].(string)
-	if userRole == "dokter" {
+	if userRole == "Doctor" {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
@@ -142,25 +135,38 @@ func (h *handlerArticle) UpdateArticle(c echo.Context) error {
 }
 
 func (h *handlerArticle) DeleteArticle(c echo.Context) error {
-	userLogin := c.Get("userLogin")
-	userRole := userLogin.(jwt.MapClaims)["role"].(string)
-	if userRole == "dokter" {
-		id, err := strconv.Atoi(c.Param("id"))
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
-		}
-
-		article, err := h.ArticleRepository.GetArticle(uint(id))
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
-		}
-
-		articleDelete, err := h.ArticleRepository.DeleteArticle(article)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
-		}
-
-		return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: articleDelete})
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
-	return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: "Access denied"})
+
+	article, err := h.ArticleRepository.GetArticle(uint(id))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	articleDelete, err := h.ArticleRepository.DeleteArticle(article)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: articleDelete})
+}
+
+func (h *handlerArticle) FindMyArticles(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	articles, err := h.ArticleRepository.FindMyArticles(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	if len(articles) <= 0 {
+		return c.JSON(http.StatusOK, dto.ErrorResult{Code: http.StatusOK, Message: "Record not found"})
+	}
+
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: articles})
 }

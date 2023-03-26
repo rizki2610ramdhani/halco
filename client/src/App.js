@@ -9,6 +9,9 @@ import Profile from './pages/Profile';
 import ConsultationForm from './pages/ConsultationForm';
 import AddArticle from './pages/AddArticle';
 import ReservasiData from './pages/ReservasiData';
+import MyArticle from './pages/MyArticle';
+import EditArticle from './pages/EditArticle';
+
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from './context/userContext';
 import { API, setAuthToken } from './config/api';
@@ -25,9 +28,9 @@ function App() {
       const response = await API.get('/check-auth');
       console.log("check user success : ", response)
       // Get user data
-      let payload = response.data.data;
+      let payload = response.data.Data;
       // Get token from local storage
-      payload.token = localStorage.token;
+      payload.Token = localStorage.token;
       // Send data to useContext
       dispatch({
         type: 'USER_SUCCESS',
@@ -68,17 +71,18 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/article" element={<Article />} />
+            <Route path="/article/:id" element={<Article />} />
             <Route element={<PrivateRouteLogin />}>
+              <Route path="/profile" element={<Profile />} />
               <Route element={<PrivateRoutePatient />}>
                 <Route path="/consultation" element={<Consultation />} />
-                <Route path="/profile" element={<Profile />} />
                 <Route path="/consultation-form" element={<ConsultationForm />} />
               </Route>
               <Route element={<PrivateRouteDokter />}>
                 <Route path="/add-article" element={<AddArticle />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/my-articles" element={<MyArticle />} />
                 <Route path="/reservasi-data" element={<ReservasiData />} />
+                <Route path="/edit-article/:id" element={<EditArticle />} />
               </Route>
             </Route>
           </Routes>

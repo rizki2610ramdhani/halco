@@ -46,7 +46,7 @@ func (h *handlerAuth) Register(c echo.Context) error {
 		Username: request.Username,
 		Email:    request.Email,
 		Password: passwordHash,
-		Role:     "",
+		Role:     request.Role,
 		Gender:   request.Gender,
 		Phone:    request.Phone,
 		Address:  request.Address,
