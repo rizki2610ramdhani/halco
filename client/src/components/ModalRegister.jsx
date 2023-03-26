@@ -61,7 +61,7 @@ function ModalRegister() {
         try {
             e.preventDefault();
 
-            const response = await API.post('/register', form)
+            const _ = await API.post('/register', form)
 
             Swal.fire({
                 title: 'Success!',
@@ -69,8 +69,6 @@ function ModalRegister() {
                 icon: 'success',
                 confirmButtonText: 'Kembali'
             })
-
-            console.log("register success : ", response)
 
             setForm({
                 fullName: '',

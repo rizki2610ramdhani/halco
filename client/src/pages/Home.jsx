@@ -7,7 +7,6 @@ export default function Home() {
 
     let { data: articles } = useQuery('articlesCache', async () => {
         const response = await API.get('/articles');
-        console.log(response.data.Data)
         return response.data.Data;
     });
    

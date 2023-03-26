@@ -39,8 +39,7 @@ export default function AddArticle() {
             formData.set('image', form.image[0], form.image[0].name)
             formData.set('description', form.description)
 
-            const response = await API.post('/article', formData, config)
-            console.log("add article success : ", response);
+            const _ = await API.post('/article', formData, config)
             Swal.fire({
                 title: 'Success!',
                 text: 'Article berhasil ditambahkan',

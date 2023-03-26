@@ -22,6 +22,17 @@ type UserResponse struct {
 	FullName string
 }
 
+type UserConsultation struct {
+	ID       uint
+	FullName string
+	Gender   string
+	Phone    string
+}
+
 func (UserResponse) TableName() string {
+	return "users"
+}
+
+func (UserConsultation) TableName() string {
 	return "users"
 }

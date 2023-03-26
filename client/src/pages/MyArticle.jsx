@@ -14,20 +14,18 @@ export default function MyArticle() {
 
     let { data: articles, refetch } = useQuery('articlesCache', async () => {
         const response = await API.get('/articles/' + id);
-        console.log(response.data.Data)
         return response.data.Data;
     });
 
     async function deleteArticle(deleteId) {
         try {
-            const response = await API.delete('/article/' + deleteId);
+            const _ = await API.delete('/article/' + deleteId);
             Swal.fire({
                 title: 'Success!',
                 text: 'Article berhasil dihapus',
                 icon: 'success',
                 confirmButtonText: 'Kembali'
             })
-            console.log(response)
             refetch()
         } catch (error) {
             Swal.fire({
@@ -64,12 +62,12 @@ export default function MyArticle() {
                                         <ul className="dropdown-menu">
                                             <li>
                                                 <Link to={"/edit-article/" + item.ID} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
-                                                    <button className="text-bold" style={{ border: "none", color: "white", borderRadius: "10px", padding: "4px", backgroundColor: "#0ACF83", margin:"2px" }}>
+                                                    <button className="text-bold" style={{ border: "none", color: "white", borderRadius: "10px", padding: "4px", backgroundColor: "#0ACF83", margin: "2px" }}>
                                                         Edit Article
                                                     </button>
                                                 </Link>
                                                 <Link className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
-                                                    <button onClick={() => deleteArticle(item.ID)} className="text-bold" style={{ border: "none", color: "white", borderRadius: "10px", padding: "4px", backgroundColor: "#FF0742", margin:"2px" }}>
+                                                    <button onClick={() => deleteArticle(item.ID)} className="text-bold" style={{ border: "none", color: "white", borderRadius: "10px", padding: "4px", backgroundColor: "#FF0742", margin: "2px" }}>
                                                         Delete Article
                                                     </button>
                                                 </Link>
@@ -82,6 +80,6 @@ export default function MyArticle() {
                     }
                 </tbody>
             </Table>
-        </Container>
+        </Container >
     )
 }

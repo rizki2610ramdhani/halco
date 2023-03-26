@@ -31,7 +31,6 @@ function ModalLogin() {
 
             const response = await API.post('/login', form)
 
-            console.log(response)
             Swal.fire({
                 title: 'Success!',
                 text: 'Registrasi berhasil',

@@ -69,12 +69,11 @@ export default function EditArticle() {
             formData.set('title', form.title);
             formData.set('description', form.description);
 
-            const response = await API.patch(
+            const _ = await API.patch(
                 '/article/' + id,
                 formData,
                 config
             );
-            console.log(response.data);
             Swal.fire({
                 title: 'Success!',
                 text: 'Article berhasil diedit',
