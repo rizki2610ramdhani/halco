@@ -32,7 +32,7 @@ export default function ConsultationForm() {
     const handleSubmit = useMutation(async (e) => {
         try {
             e.preventDefault()
-
+            
             // Store data with FormData as object
             const formData = new FormData()
             formData.set('bornDate', form.bornDate)

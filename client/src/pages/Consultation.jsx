@@ -11,13 +11,11 @@ export default function Consultation() {
 
     let id = state.user.ID
 
-    console.log(id)
-
-
     let { data: consultations } = useQuery('consultationsCache', async () => {
         const response = await API.get('/consultations/' + id);
         return response.data.Data;
     });
+
 
     return (
         <Container>
@@ -51,9 +49,33 @@ export default function Consultation() {
                                 </Col>
                             </Row>
                             <hr />
-                            <Row className="mx-5">
-                                <h4 className="text-center text-gray text-bold">Waiting for reply</h4>
-                            </Row>
+                            {
+                                item.Status === "waiting" ?
+                                    <Row className="mx-5">
+                                        <h4 className="text-center text-gray text-bold">Waiting for reply</h4>
+                                    </Row>
+                                    :
+                                    item.Status === "success" ?
+                                        
+                                        <Row className="mx-5">
+                                            <Col md={1}>
+                                                <img src={state.user.Photo} className='nav-profile-image' alt="profile" />
+                                            </Col>
+                                            <Col md={11}>
+                                                <p className="text-gray">
+                                                    Hi Radif hari ini adalah jadwal konsultasi kamu, silahkan klik link berikut untuk melakukan konsultasi secara
+                                                    langsung kepada saya :
+                                                </p>
+                                                <p className="text-gray">Dr. Muhammad Rizki </p>
+                                            </Col>
+                                        </Row>
+                                        :
+                                        <Row className="mx-5">
+                                            <h4 className="text-center text-gray text-bold">Reject</h4>
+                                        </Row>
+
+                            }
+
                         </Card.Body>
                     </Card>
                 ))

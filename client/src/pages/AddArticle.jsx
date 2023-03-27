@@ -1,11 +1,14 @@
 import { Container, Form, Button } from "react-bootstrap";
 import { useMutation } from "react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { API } from '../config/api'
 import Swal from 'sweetalert2'
+import { UserContext } from "../context/userContext";
 
 export default function AddArticle() {
+
+    const[state] = useContext(UserContext)
     
     let navigate = useNavigate()
 
@@ -39,7 +42,7 @@ export default function AddArticle() {
             formData.set('image', form.image[0], form.image[0].name)
             formData.set('description', form.description)
 
-            const _ = await API.post('/article', formData, config)
+            const _ = await API.post('/article/' + state.user.ID, formData, config)
             Swal.fire({
                 title: 'Success!',
                 text: 'Article berhasil ditambahkan',

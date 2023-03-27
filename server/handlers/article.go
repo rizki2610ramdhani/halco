@@ -24,12 +24,13 @@ func HandlerArticle(ArticleRepository repositories.ArticleRepository) *handlerAr
 }
 
 func (h *handlerArticle) CreateArticle(c echo.Context) error {
-	userLogin := c.Get("userLogin")
-	userId := userLogin.(jwt.MapClaims)["id"].(float64)
+
+	id, _ := strconv.Atoi(c.Param("id"))
+
 	dataFile := c.Get("dataFile").(string)
 
 	request := articledto.ArticleRequest{
-		UserId:      int(userId),
+		UserId:      int(id),
 		Title:       c.FormValue("title"),
 		Attache:     dataFile,
 		Description: c.FormValue("description"),

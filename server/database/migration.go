@@ -13,6 +13,7 @@ func RunMigration() {
 		&models.User{},
 		&models.Article{},
 		&models.Consultation{},
+		&models.Response{},
 	)
 	if err != nil {
 		fmt.Println(err)

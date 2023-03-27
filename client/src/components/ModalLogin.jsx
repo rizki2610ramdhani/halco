@@ -49,7 +49,7 @@ function ModalLogin() {
                 password: ''
             })
 
-            setAuthToken(localStorage.Token);
+            setAuthToken(response.data.Data.Token);
             navigate("/")
 
             handleClose()

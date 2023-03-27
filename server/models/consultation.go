@@ -13,6 +13,7 @@ type Consultation struct {
 	Subject     string `gorm:"type: varchar(20)"`
 	RequestDate string `gorm:"type: varchar(50)"`
 	Description string `gorm:"type: text"`
+	Status      string `gorm:"type: varchar(100)"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
